@@ -25,14 +25,135 @@ const SinglePlayerMode = ({ difficulty, initialTimeLimit }) => {
     setSolution(e.target.value);
   };
 
-  // Simplified solution validator
-  const validateSolution = (digits, solution) => {
+  // Robust solution validator that supports digit grouping
+  const validateSolution = (puzzleDigits, solution) => {
+    // Remove all whitespace from the solution
+    const cleanSolution = solution.replace(/\s+/g, '');
+    
+    // Create a copy of the puzzle digits as a string without spaces
+    const puzzleString = puzzleDigits.toString().replace(/\s+/g, '');
+    
+    // Extract all numbers from the solution
+    const numberMatches = cleanSolution.match(/\d+/g) || [];
+    const allDigitsInSolution = numberMatches.join('');
+    
+    // Check if the solution uses exactly the same digits as the puzzle
+    if (allDigitsInSolution.length !== puzzleString.length) {
+      return false; // Different number of digits
+    }
+    
+    // Check if the digits appear in the correct order
+    let puzzleIndex = 0;
+    for (const num of numberMatches) {
+      for (const digit of num) {
+        if (digit !== puzzleString[puzzleIndex]) {
+          return false; // Digits not in correct order
+        }
+        puzzleIndex++;
+      }
+    }
+    
+    // Now safely calculate the result using a math expression parser
     try {
-      const result = eval(solution);
+      // Using a simple recursive descent parser for safety
+      const result = evaluateExpression(cleanSolution);
       return Math.abs(result - 100) < 0.0001; // Check if result equals 100
     } catch (error) {
       return false;
     }
+  };
+
+  // A simple recursive descent parser for mathematical expressions
+  const evaluateExpression = (expression) => {
+    let pos = 0;
+    
+    function parseExpression() {
+      let left = parseTerm();
+      
+      while (pos < expression.length) {
+        if (expression[pos] === '+') {
+          pos++;
+          left += parseTerm();
+        } else if (expression[pos] === '-') {
+          pos++;
+          left -= parseTerm();
+        } else {
+          break;
+        }
+      }
+      
+      return left;
+    }
+    
+    function parseTerm() {
+      let left = parseFactor();
+      
+      while (pos < expression.length) {
+        if (expression[pos] === '*') {
+          pos++;
+          left *= parseFactor();
+        } else if (expression[pos] === '/') {
+          pos++;
+          const right = parseFactor();
+          if (right === 0) throw new Error("Division by zero");
+          left /= right;
+        } else {
+          break;
+        }
+      }
+      
+      return left;
+    }
+    
+    function parseFactor() {
+      if (expression[pos] === '(') {
+        pos++; // Skip '('
+        const result = parseExpression();
+        if (expression[pos] !== ')') throw new Error("Missing closing parenthesis");
+        pos++; // Skip ')'
+        
+        // Check for power operator after parenthesis
+        if (pos < expression.length && expression[pos] === '^') {
+          pos++;
+          const exponent = parseFactor();
+          return Math.pow(result, exponent);
+        }
+        
+        return result;
+      }
+      
+      // Handle numbers
+      let start = pos;
+      while (
+        pos < expression.length && 
+        (
+          (expression[pos] >= '0' && expression[pos] <= '9') || 
+          expression[pos] === '.'
+        )
+      ) {
+        pos++;
+      }
+      
+      if (start === pos) throw new Error("Expected number");
+      
+      const num = parseFloat(expression.substring(start, pos));
+      
+      // Check for power operator after number
+      if (pos < expression.length && expression[pos] === '^') {
+        pos++;
+        const exponent = parseFactor();
+        return Math.pow(num, exponent);
+      }
+      
+      return num;
+    }
+    
+    const result = parseExpression();
+    if (pos !== expression.length) {
+      throw new Error("Unexpected characters at end of expression");
+    }
+    
+    return result;
   };
 
   // Handle solution submission
