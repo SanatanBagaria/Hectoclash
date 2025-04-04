@@ -14,7 +14,7 @@ const SinglePlayerPage = () => {
   
   const handleCustomTimeChange = (e) => {
     const value = parseInt(e.target.value) || 60;
-    setCustomTime(Math.min(Math.max(value, 10), 300)); // Clamp between 10 and 300
+    setCustomTime(Math.min(Math.max(value, 0), 600)); // Clamp between 10 and 300
   };
   
   return (
@@ -42,8 +42,8 @@ const SinglePlayerPage = () => {
             <div className="flex items-center">
               <input
                 type="number"
-                min="10"
-                max="300"
+                min="0"
+                max="600"
                 value={customTime}
                 onChange={handleCustomTimeChange}
                 className="w-24 p-2 border rounded text-center mr-4"
