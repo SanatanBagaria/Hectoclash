@@ -1,5 +1,6 @@
 // src/components/GameModeSelector.jsx
 import React from "react";
+import { Link } from "react-router-dom";
 import { gameSettings } from "../data/mockData";
 
 const GameModeSelector = ({ onSelectMode, onSelectDifficulty }) => {
@@ -7,7 +8,15 @@ const GameModeSelector = ({ onSelectMode, onSelectDifficulty }) => {
     <div className="p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6">Choose a Game Mode</h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <Link 
+          to="/singleplayer"
+          className="border rounded-lg p-4 hover:bg-blue-50 cursor-pointer transition"
+        >
+          <h3 className="text-xl font-semibold mb-2">Single Player</h3>
+          <p className="text-gray-600">Practice your skills without an opponent</p>
+        </Link>
+        
         {gameSettings.modes.map(mode => (
           <div 
             key={mode.id}

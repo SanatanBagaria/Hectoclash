@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import GameLobby from "./pages/GameLobby";
 import ProfilePage from "./pages/ProfilePage";
+import SinglePlayerPage from "./pages/SinglePlayerPage";
 import { currentUser } from "./data/mockData";
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/game" element={<GameLobby />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/singleplayer" element={<SinglePlayerPage />} />
       </Routes>
     </BrowserRouter>
   );
