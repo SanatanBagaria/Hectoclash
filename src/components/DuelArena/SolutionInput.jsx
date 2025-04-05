@@ -1,4 +1,3 @@
-// src/components/DuelArena/SolutionInput.jsx
 import React from "react";
 
 const SolutionInput = ({ value, onChange, onSubmit, disabled = false }) => {
@@ -17,7 +16,7 @@ const SolutionInput = ({ value, onChange, onSubmit, disabled = false }) => {
         className={`w-full py-2 rounded ${
           disabled 
             ? "bg-gray-400 cursor-not-allowed" 
-            : "bg-blue-600 hover:bg-blue-700 cursor-pointer"
+            : "bg-blue-900 hover:bg-blue-800 cursor-pointer"
         } text-white`}
         disabled={disabled}
       >

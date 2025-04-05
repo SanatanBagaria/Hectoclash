@@ -3,7 +3,10 @@ export const mockPuzzles = [
   "789123",
   "456789",
   "234567",
-  "345678"
+  "345678",
+  "567891",
+  "912345",
+  "678912"
 ];
 
 export const currentUser = {
@@ -13,6 +16,7 @@ export const currentUser = {
   losses: 12, 
   score: 800, 
   badges: ["Weekly Champion", "Speed Demon", "Perfect Solver"],
+  createdAt: "2023-01-15T12:00:00Z",
   recentGames: [
     { opponent: "NumberNinja", result: "win", score: 100, date: "2023-04-02" },
     { opponent: "CalculusKing", result: "win", score: 95, date: "2023-04-01" },
@@ -20,7 +24,6 @@ export const currentUser = {
   ]
 };
 
-// Added mockUsers array to fix the import error
 export const mockUsers = [
   { 
     id: 1, 

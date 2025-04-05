@@ -1,46 +1,25 @@
-// src/components/GameModeSelector.jsx
 import React from "react";
 import { Link } from "react-router-dom";
-import { gameSettings } from "../data/mockData";
 
-const GameModeSelector = ({ onSelectMode, onSelectDifficulty }) => {
+const GameModeSelector = () => {
+  const gameModes = [
+    { id: "first-three", name: "First Three", description: "Race to solve the first three puzzles" },
+    { id: "time-attack", name: "Time Attack", description: "Solve as many puzzles as you can in 2 minutes" },
+    { id: "reverse-hectoc", name: "Reverse Hectoc", description: "Fill in the numbers to reach 100" }
+  ];
+
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Choose a Game Mode</h2>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {gameModes.map((mode) => (
         <Link 
-          to="/singleplayer"
-          className="border rounded-lg p-4 hover:bg-blue-50 cursor-pointer transition"
+          key={mode.id}
+          to={`/multiplayer/${mode.id}`}
+          className="bg-white border rounded-lg p-6 hover:shadow-md transition"
         >
-          <h3 className="text-xl font-semibold mb-2">Single Player</h3>
-          <p className="text-gray-600">Practice your skills without an opponent</p>
+          <h3 className="text-xl font-bold mb-2">{mode.name}</h3>
+          <p className="text-gray-600">{mode.description}</p>
         </Link>
-        
-        {gameSettings.modes.map(mode => (
-          <div 
-            key={mode.id}
-            className="border rounded-lg p-4 hover:bg-blue-50 cursor-pointer transition"
-            onClick={() => onSelectMode && onSelectMode(mode.id)}
-          >
-            <h3 className="text-xl font-semibold mb-2">{mode.name}</h3>
-            <p className="text-gray-600">{mode.description}</p>
-          </div>
-        ))}
-      </div>
-      
-      <h3 className="text-xl font-bold mb-4">Select Difficulty</h3>
-      <div className="flex space-x-4">
-        {gameSettings.difficulties.map(diff => (
-          <button
-            key={diff.id}
-            className="px-4 py-2 rounded border hover:bg-gray-100"
-            onClick={() => onSelectDifficulty && onSelectDifficulty(diff.id)}
-          >
-            {diff.name} ({diff.timeLimit}s)
-          </button>
-        ))}
-      </div>
+      ))}
     </div>
   );
 };

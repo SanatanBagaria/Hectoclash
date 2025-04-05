@@ -1,17 +1,19 @@
-// src/components/OpponentStatus.jsx
 import React from "react";
 
-const OpponentStatus = ({ name, progress }) => {
+const OpponentStatus = ({ opponent }) => {
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md">
-      <h3 className="text-lg font-semibold mb-2">Opponent: {name}</h3>
-      <div className="w-full bg-gray-200 rounded-full h-4 mb-2">
-        <div 
-          className="bg-green-500 h-4 rounded-full" 
-          style={{ width: `${progress}%` }}
-        ></div>
+    <div className="bg-gray-50 p-4 rounded-lg">
+      <h3 className="text-lg font-semibold mb-2">Opponent</h3>
+      <div className="flex items-center mb-2">
+        <div className="w-8 h-8 rounded-full bg-red-300 flex items-center justify-center text-white mr-2">
+          {opponent.name.charAt(0)}
+        </div>
+        <span className="font-medium">{opponent.name}</span>
       </div>
-      <div className="text-sm text-gray-600 text-right">{progress}% complete</div>
+      <div className="text-sm text-gray-600">
+        <div>Score: {opponent.score}</div>
+        <div>Puzzles Solved: {opponent.puzzlesSolved || 0}</div>
+      </div>
     </div>
   );
 };

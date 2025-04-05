@@ -1,4 +1,3 @@
-// src/components/DuelArena/PuzzleDisplay.jsx
 import React from "react";
 
 const PuzzleDisplay = ({ puzzle, mode }) => {
