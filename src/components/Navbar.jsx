@@ -13,7 +13,7 @@ const Navbar = ({ user }) => {
           </span>
         )}
         <Link to="/" className="mr-4 hover:underline">Home</Link>
-        <Link to="/singleplayer" className="mr-4 hover:underline">Practice</Link>
+        <Link to="/singleplayer" className="mr-4 hover:underline">Practice </Link>
         <Link to="/game" className="mr-4 hover:underline">Multiplayer</Link>
         <Link to="/profile" className="hover:underline">Profile</Link>
       </div>
